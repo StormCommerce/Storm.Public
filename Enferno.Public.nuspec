@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+
+<package>
+  <metadata>
+    <id>Enferno.Public</id>
+    <version>1.0.17</version>
+    <title>Enferno Public</title>
+    <authors>Enferno AB</authors>
+    <owners>Enferno AB</owners>
+    <projectUrl>https://enfernopublic.codeplex.com/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Enferno API helpers.</description>
+    <releaseNotes>
+      Enterprise Library was updated to version 6.
+      Rolled log files zipping was added.
+    </releaseNotes>
+    <copyright>Copyright 2014</copyright>
+    <tags>Enferno Public</tags>
+    <dependencies>
+      <dependency id="CommonServiceLocator" version="1.3.0" />
+      <dependency id="EnterpriseLibrary.Common" version="6.0.1304.0" />
+      <dependency id="EnterpriseLibrary.Logging" version="6.0.1304.0" />
+      <dependency id="Unity" version="4.0.1" />
+      <dependency id="Unity.Interception" version="4.0.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="Enferno.Public\bin\Debug\Enferno.Public.dll" target="lib/net45" />
+    <file src="Enferno.Public\bin\Debug\Enferno.Public.pdb" target="lib/net45" />
+    <file src="Enferno.Public\**\*.cs" target="src" />
+  </files>
+</package>

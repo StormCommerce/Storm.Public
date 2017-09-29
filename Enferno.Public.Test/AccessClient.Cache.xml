@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CacheConfiguration name="AccessClient" duration="300">
+  <Item name="CreateCustomer" duration="0" redirectformat="Customer{0}" propertypath="Id"/>
+  <Item name="GetCustomerByEmail" redirectformat="Customer{0}" propertypath="Id"/>
+  
+  <Item name="GetCustomer" redirectformat="Customer{0}" propertypath="Id"/>
+  <Item name="UpdateCustomer" duration="0" redirectformat="Customer{0}" propertypath="Id"/>
+  <Item name="UpdateCustomer2" duration="0" redirectformat="Customer{0}" refreshformat="Customer{0}" propertypath="Id"/>
+
+  <Item name="GetBasket" redirectformat="Basket{0}" propertypath="Id"/>
+  <Item name="GetCheckout" redirectformat="Checkout{0}" propertypath="Id"/>
+  <Item name="InsertBasketItem" duration="0" redirectformat="Basket{0};Checkout{0}" refreshformat="Basket{0}" propertypath="Id"/>
+
+  <Item name="GetEntityWithDefaultDuration"/>
+  <Item name="GetEntityWith1MinuteDuration" duration="60"/>
+  <Item name="GetEntityWithZeroDuration" duration="0"/>
+
+  <Item name="GetSomethingWithFlush" duration="300" />
+  <Item name="GetWhateverWithFlush" duration="300" />
+
+</CacheConfiguration>

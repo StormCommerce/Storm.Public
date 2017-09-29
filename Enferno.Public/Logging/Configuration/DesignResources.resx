@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="LogFileDialogFilter" xml:space="preserve">
+    <value>Log Files (*.log)|*.log|All Files|*.*</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataDescription" xml:space="preserve">
+    <value>A logging target listener that writes log messages in an XML format to a series of text files. 
+The listener can start a new file at specified intervals, use a specified file naming pattern, and optionally overwrite existing files. 
+</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataDisplayName" xml:space="preserve">
+    <value>Rolling Xml Trace Listener</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataFileNameDescription" xml:space="preserve">
+    <value>The path and name of the disk file to write log message to. It can include environment variables such as %WINDIR%, %TEMP%, and %USERPROFILE%.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataFileNameDisplayName" xml:space="preserve">
+    <value>File Name</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataFilterDescription" xml:space="preserve">
+    <value>The minimum severity of messages that will be sent to the logging target. 
+Valid values are All (the default), Off, Critical, Error, Warning, Information, Verbose, and Activity Tracing. 
+The behavior is for messages with the selected severity and all higher severities to be included. 
+For example, the Warning setting will allow warning, error, and critical messages to be written to the logging target.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataFilterDisplayName" xml:space="preserve">
+    <value>Severity Filter</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataListenerDataTypeNameDescription" xml:space="preserve">
+    <value>The fully qualified type name of the Listener.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataListenerDataTypeNameDisplayName" xml:space="preserve">
+    <value>Listener Data Type</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataMaxArchivedFilesDescription" xml:space="preserve">
+    <value>The maximum number of log files to retain. When set to a numeric value, the listener will purge old files based on the file creation date when the number exceeds the specified value.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataMaxArchivedFilesDisplayName" xml:space="preserve">
+    <value>Max Archived Files</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataNameDescription" xml:space="preserve">
+    <value>The name of the Rolling XML Trace Listener.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataNameDisplayName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataRollFileExistsBehaviorDescription" xml:space="preserve">
+    <value>Determines what occurs to an existing file when it rolls over. 
+Increment means that the listener will create a new file using a name created by incrementing the timestamp. 
+Overwrite means that, if a value for the Timestamp Pattern is not specified, the existing file is overwritten.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataRollFileExistsBehaviorDisplayName" xml:space="preserve">
+    <value>File Exists Behavior</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataRollIntervalDescription" xml:space="preserve">
+    <value>Determines when the log file rolls over. The default is None. 
+Other options are intervals of Midnight, Minute, Hour, Day, Month, or Year. 
+If required, both a maximum file size and a roll interval can be specified.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataRollIntervalDisplayName" xml:space="preserve">
+    <value>Roll Interval</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataRollSizeKBDescription" xml:space="preserve">
+    <value>The maximum size of the log file, in kilobytes, before it rolls over. If required, both a maximum file size and a roll interval can be specified.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataRollSizeKBDisplayName" xml:space="preserve">
+    <value>Roll Size KB</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataTimeStampPatternDescription" xml:space="preserve">
+    <value>The date/time format used to create the suffix for the file name, such as 'yyyy-MM-dd'.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataTimeStampPatternDisplayName" xml:space="preserve">
+    <value>Timestamp Pattern</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataTraceOutputOptionsDescription" xml:space="preserve">
+    <value>Listeners that do not output to a Text Formatter use this property to determine which options, or elements, should be included in the trace output. 
+Possible values are: CallStack, DateTime, LogicalOperationStack, None, ProcessId, ThreadId, and Timestamp. 
+The default is None. This property is optional.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataTraceOutputOptionsDisplayName" xml:space="preserve">
+    <value>Trace Output Options</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataTypeNameDescription" xml:space="preserve">
+    <value>The fully qualified type name of the Rolling XML Trace Listener.</value>
+  </data>
+  <data name="RollingXmlTraceListenerDataTypeNameDisplayName" xml:space="preserve">
+    <value>Type</value>
+  </data>
+</root>
