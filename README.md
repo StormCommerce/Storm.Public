@@ -1,21 +1,6 @@
-# Storm-Public
-Storm.Public.Web
-================
-Enferno.Public
-Enferno.Public.Azure? Björn?
-Enferno.Public.Logging
-Enferno.Public.Web
-Enferno.Public.N2
-Enferno.Public.N2.SalesTool
-Enferno.Service.Contracts.Message
+# Storm Public
+Storm Public is a .NET library for infrastructural plumming, like logging, caching and inversion of control.
 
-TILL TFS
-========
-Enferno.Public.Web.Components
-Enferno.Public.Web.Product
-Enferno.Public.Web.ShoppingBasket
+Requires Enterprise library logging application block 6.x
 
-TA BORT
-=======
-Release
-Respektive projekts gamla releasebrancher. Ej senaste.
+Watch this project to follow our releases.
