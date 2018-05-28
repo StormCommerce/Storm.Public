@@ -1,7 +1,10 @@
 ﻿
 using System;
-using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
+using Unity;
+using Unity.Lifetime;
+using Unity.Registration;
+using Unity.Resolution;
 
 namespace Enferno.Public.InversionOfControl
 {

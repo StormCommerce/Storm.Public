@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-using Microsoft.Practices.Unity;
+using Unity;
 
 using Enferno.Public.Caching.Configuration;
 using Enferno.Public.InversionOfControl;

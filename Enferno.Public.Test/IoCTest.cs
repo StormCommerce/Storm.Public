@@ -1,8 +1,8 @@
 ﻿
 using System;
 using Enferno.Public.InversionOfControl;
-using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Unity.Lifetime;
 
 namespace Enferno.Public.Test
 {

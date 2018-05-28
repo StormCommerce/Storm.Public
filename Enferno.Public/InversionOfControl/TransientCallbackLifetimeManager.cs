@@ -1,5 +1,5 @@
 ﻿using System;
-using Microsoft.Practices.Unity;
+using Unity.Lifetime;
 
 namespace Enferno.Public.InversionOfControl
 {
@@ -16,19 +16,15 @@ namespace Enferno.Public.InversionOfControl
             this.createCallback = createCallback;
         }
 
-        public override object GetValue()
+        public override object GetValue(ILifetimeContainer container = null)
         {
             return createCallback();
         }
 
-        public override void RemoveValue()
+        protected override LifetimeManager OnCreateLifetimeManager()
         {
-            // NOOP
-        }
-
-        public override void SetValue(object newValue)
-        {
-            // NOOP 
+            // NOOP;
+            return null;
         }
     }
 }
