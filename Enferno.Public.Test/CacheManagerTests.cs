@@ -18,7 +18,7 @@ namespace Enferno.Public.Test
     [TestClass]
     public class CacheManagerTests
     {
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void CacheConfigDurationTest()
         {
             // Arrange
@@ -36,7 +36,7 @@ namespace Enferno.Public.Test
             Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("NonExistingItem"), "Non-existing 0 duration");    
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void CacheConfigDurationWhenNoFileTest()
         {
             // Arrange
@@ -51,7 +51,7 @@ namespace Enferno.Public.Test
             Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("WhatEver"));
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void GetBasketWithExecuteFunctionWithRedirectTest()
         {
             const string cacheName = "AccessClient";
@@ -75,7 +75,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(cached, basket);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void GetBasketWithExecuteFunctionWithRedirectAndClearTest()
         {
             const string cacheName = "AccessClient";
@@ -111,7 +111,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(cachedBasket, modifiedBasket);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void FlushItemsByTagTest()
         {
             // Arrange
@@ -160,7 +160,7 @@ namespace Enferno.Public.Test
             Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ignore));
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void GetNullDataAndThenFlushItToCreateNew()
         {
             // Arrange
@@ -194,7 +194,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(newObject, cached, "Now it should be cached.");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void GetBasketThenInsertWithCacheRefresh()
         {
             // Arrange
@@ -235,7 +235,7 @@ namespace Enferno.Public.Test
             Assert.IsNull(cached, "Checkout should have been flushed");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void GetCustomerThenUpdateWithRedirectFormatTest()
         {
             // Arrange
@@ -265,7 +265,7 @@ namespace Enferno.Public.Test
             success = cacheManager.TryGet(cacheName, cacheKeyCustomer, out cached);
             Assert.IsFalse(success, "customer should have been flushed.");
         }
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void GetCustomerThenUpdateWithRefreshFormatTest()
         {
             // Arrange
@@ -296,7 +296,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(updatedCustomer, cached, "Should be the same in the cache after update");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void FlushItemsByMultipleDependencyNamesTest()
         {
             // Arrange

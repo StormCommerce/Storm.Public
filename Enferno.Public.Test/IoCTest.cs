@@ -9,7 +9,7 @@ namespace Enferno.Public.Test
     [TestClass]
     public class IoCTest
     {
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         [ExpectedException(typeof(ArgumentException))]
         public void LoadContainerTest1()
         {
@@ -20,7 +20,7 @@ namespace Enferno.Public.Test
             Assert.Fail("Should not get here");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void LoadContainerTest2()
         {
             // Arrange
@@ -30,7 +30,7 @@ namespace Enferno.Public.Test
             Assert.IsNotNull(container);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         [Description("Tests manual create of IoC")]
         public void RegisterTypeTest1()
         {
@@ -43,7 +43,7 @@ namespace Enferno.Public.Test
             Assert.IsInstanceOfType(data, typeof(ETest));
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         [Description("Tests manual create of IoC")]
         public void RegisterTypeTest2()
         {
@@ -59,14 +59,14 @@ namespace Enferno.Public.Test
             Assert.IsTrue(IoC.IsRegistered<ITest2>());
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void IsRegisteredFalseTest()
         {
             // Assert 
             Assert.IsFalse(IoC.IsRegistered<INoneExisting>());
         }
         
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void RegisterTransientTypeTest1()
         {
             // Arrange
@@ -78,7 +78,7 @@ namespace Enferno.Public.Test
             Assert.IsInstanceOfType(data, typeof(ATest2));
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void RegisterTransientTypeTest2()
         {
             // Arrange
@@ -92,7 +92,7 @@ namespace Enferno.Public.Test
             Assert.AreNotSame(data1, data2);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void RegisterSingletonTypeTest1()
         {
             // Arrange
@@ -106,7 +106,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(data1, data2);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void ResolveTransientTest()
         {
             // Arrange
@@ -118,7 +118,7 @@ namespace Enferno.Public.Test
             Assert.AreNotSame(data1, data2);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void ResolveSingletonTest()
         {
             // Arrange
@@ -130,7 +130,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(data1, data2);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void ResolveDisposableTest()
         {
             // Arrange
@@ -149,7 +149,7 @@ namespace Enferno.Public.Test
             Assert.AreEqual("DisposableObject", data3.GetValule());
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void TransientCallbackLifetimeManagerTest()
         {
             IoC.RegisterType<ITest2, BTest2>(new TransientCallbackLifetimeManager<ITest2>(() => new BTest2()));

@@ -23,8 +23,7 @@ namespace Enferno.Public.InversionOfControl
 
         protected override LifetimeManager OnCreateLifetimeManager()
         {
-            // NOOP;
-            return null;
+            return this;
         }
     }
 }

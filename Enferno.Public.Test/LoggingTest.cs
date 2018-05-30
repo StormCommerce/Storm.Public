@@ -8,7 +8,7 @@ namespace Enferno.Public.Test
     [TestClass]
     public class LoggingTest
     {
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddSamePropertyToLogTest()
         {
             // Arrange
@@ -22,37 +22,37 @@ namespace Enferno.Public.Test
             Assert.AreEqual("New", log.Property("Test"));
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddCategoryTest()
         {
             CheckAddCategory(CategoryFlags.Alert, "Alert");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddCategoryTest2()
         {
             CheckAddCategory(CategoryFlags.Debug, "Debug");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddCategoryTest3()
         {
             CheckAddCategory(CategoryFlags.Debug | CategoryFlags.Profiling | CategoryFlags.TrackingEvent, "Debug", "Profiling", "TrackingEvent");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddCategoryTest4()
         {
             CheckAddCategory(CategoryFlags.ClientNotification | CategoryFlags.Profiling | CategoryFlags.TrackingEvent, "ClientNotification", "Profiling", "TrackingEvent");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddCategoryTest5()
         {
             CheckAddCategoryNotExpected(CategoryFlags.ClientNotification | CategoryFlags.Profiling | CategoryFlags.TrackingEvent, "Alert", "Debug");
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void BadlyFormattedMessagesTest()
         {
             // Arrange
@@ -66,7 +66,7 @@ namespace Enferno.Public.Test
             // Ignore assert. Above should not fail.
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void AddExceptionWithMultipleMessagesTest()
         {
             // Arrange

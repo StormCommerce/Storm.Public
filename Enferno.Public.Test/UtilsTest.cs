@@ -7,7 +7,7 @@ namespace Enferno.Public.Test
     [TestClass]
     public class UtilsTest
     {
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         public void DistanceFromSkanstullToOfficeTest()
         {
             //59.30849,18.06392,59.32457,18.06776
@@ -16,7 +16,7 @@ namespace Enferno.Public.Test
             Assert.IsTrue(distance < 2000);
         }
 
-        [TestMethod]
+         [TestMethod, TestCategory("UnitTest")]
         [Description("Tests an invalid address")]
         public void EmailValidationTest1()
         {
