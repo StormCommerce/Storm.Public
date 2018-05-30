@@ -6,7 +6,7 @@
     <title>Enferno Public</title>
     <authors>Storm Commerce AB</authors>
     <owners>Storm Commerce AB</owners>
-    <projectUrl>https://enfernopublic.codeplex.com/</projectUrl>
+    <projectUrl>https://github.com/StormCommerce/Storm.Public</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Enferno API helpers.</description>
     <releaseNotes>
