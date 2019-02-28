@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Enferno.Public</id>
-    <version>2.1.1</version>
+    <version>2.1.4</version>
     <title>Enferno Public</title>
     <authors>Storm Commerce AB</authors>
     <owners>Storm Commerce AB</owners>
@@ -12,6 +12,8 @@
     <releaseNotes>
       Updated references to Unity. Unity.Abstractions changed publicKeyToken going from 3.3.1 to 4.0.0.
       Removed dependencies to unused stuff and sub dependencies. CommonServiceLocator and  Unity.Interception are removed.
+
+      Now targeting framework 4.7.
       
       See release notes for 2.0.0 when upgrading from earlier versions.
     </releaseNotes>
@@ -19,13 +21,12 @@
     <tags>Enferno Public Storm Commerce</tags>
     <dependencies>
       <dependency id="EnterpriseLibrary.Logging" version="6.0.1304.0" />
-      <dependency id="Unity.Container" version="5.9.0" />
       <dependency id="Unity.Configuration" version="5.9.0" />
     </dependencies>
   </metadata>
   <files>
-    <file src="Enferno.Public\bin\Debug\Enferno.Public.dll" target="lib/net45" />
-    <file src="Enferno.Public\bin\Debug\Enferno.Public.pdb" target="lib/net45" />
+    <file src="Enferno.Public\bin\Debug\Enferno.Public.dll" target="lib/net47" />
+    <file src="Enferno.Public\bin\Debug\Enferno.Public.pdb" target="lib/net47" />
     <file src="Enferno.Public\**\*.cs" target="src" />
   </files>
 </package>
