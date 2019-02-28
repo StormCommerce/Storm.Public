@@ -9,7 +9,7 @@ namespace Enferno.Public.Test
     [TestClass]
     public class IoCTest
     {
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         [ExpectedException(typeof(ArgumentException))]
         public void LoadContainerTest1()
         {
@@ -20,7 +20,7 @@ namespace Enferno.Public.Test
             Assert.Fail("Should not get here");
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void LoadContainerTest2()
         {
             // Arrange
@@ -30,7 +30,7 @@ namespace Enferno.Public.Test
             Assert.IsNotNull(container);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         [Description("Tests manual create of IoC")]
         public void RegisterTypeTest1()
         {
@@ -43,7 +43,7 @@ namespace Enferno.Public.Test
             Assert.IsInstanceOfType(data, typeof(ETest));
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         [Description("Tests manual create of IoC")]
         public void RegisterTypeTest2()
         {
@@ -52,21 +52,21 @@ namespace Enferno.Public.Test
             Assert.IsNotNull(existing);
 
             // Act
-            Assert.IsFalse(IoC.IsRegistered<ITest2>());
-            IoC.RegisterType<ITest2, ATest2>();
+            Assert.IsFalse(IoC.IsRegistered<ITest3>());
+            IoC.RegisterType<ITest3, ATest3>();
 
             // Assert 
-            Assert.IsTrue(IoC.IsRegistered<ITest2>());
+            Assert.IsTrue(IoC.IsRegistered<ITest3>());
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void IsRegisteredFalseTest()
         {
             // Assert 
             Assert.IsFalse(IoC.IsRegistered<INoneExisting>());
         }
         
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void RegisterTransientTypeTest1()
         {
             // Arrange
@@ -78,7 +78,7 @@ namespace Enferno.Public.Test
             Assert.IsInstanceOfType(data, typeof(ATest2));
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void RegisterTransientTypeTest2()
         {
             // Arrange
@@ -92,7 +92,7 @@ namespace Enferno.Public.Test
             Assert.AreNotSame(data1, data2);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void RegisterSingletonTypeTest1()
         {
             // Arrange
@@ -106,7 +106,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(data1, data2);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void ResolveTransientTest()
         {
             // Arrange
@@ -118,7 +118,7 @@ namespace Enferno.Public.Test
             Assert.AreNotSame(data1, data2);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void ResolveSingletonTest()
         {
             // Arrange
@@ -130,7 +130,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(data1, data2);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void ResolveDisposableTest()
         {
             // Arrange
@@ -149,7 +149,7 @@ namespace Enferno.Public.Test
             Assert.AreEqual("DisposableObject", data3.GetValule());
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void TransientCallbackLifetimeManagerTest()
         {
             IoC.RegisterType<ITest2, BTest2>(new TransientCallbackLifetimeManager<ITest2>(() => new BTest2()));
@@ -206,6 +206,11 @@ namespace Enferno.Public.Test
         string GetValule();
     }
 
+    public interface ITest3
+    {
+        string GetValule();
+    }
+
     public class ATest2 : ITest2
     {
         public string GetValule()
@@ -213,6 +218,15 @@ namespace Enferno.Public.Test
             return "ctest2";
         }
     }
+
+    public class ATest3 : ITest3
+    {
+        public string GetValule()
+        {
+            return "ctest3";
+        }
+    }
+
     public class BTest2 : ITest2
     {
         public string GetValule()

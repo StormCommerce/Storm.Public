@@ -7,7 +7,7 @@ namespace Enferno.Public.InversionOfControl
     /// The TransientCallbackLifetimeManager takes a callback which should create the instance you want.
     /// </summary>
     /// <typeparam name="T">This is the type the lifetime manager should return</typeparam>
-    public class TransientCallbackLifetimeManager<T> : LifetimeManager
+    public class TransientCallbackLifetimeManager<T> : LifetimeManager, ITypeLifetimeManager
     {
         private readonly Func<T> createCallback;
 

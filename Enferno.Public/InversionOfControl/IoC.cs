@@ -2,8 +2,8 @@
 using System;
 using Microsoft.Practices.Unity.Configuration;
 using Unity;
+using Unity.Injection;
 using Unity.Lifetime;
-using Unity.Registration;
 using Unity.Resolution;
 
 namespace Enferno.Public.InversionOfControl
@@ -34,17 +34,18 @@ namespace Enferno.Public.InversionOfControl
             return Container.RegisterType<T, TS>(name, injectionMembers);
         }
 
-        public static IUnityContainer RegisterType<T, TS>(LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers) where TS : T
+        public static IUnityContainer RegisterType<T, TS>(ITypeLifetimeManager lifetimeManager, params InjectionMember[] injectionMembers) where TS : T
         {
+            Container.RegisterType<T, TS>();
             return Container.RegisterType<T, TS>(lifetimeManager, injectionMembers);
         }
 
-        public static IUnityContainer RegisterType<T, TS>(string name, LifetimeManager lifetimeManager, params InjectionMember[] injectionMembers) where TS : T
+        public static IUnityContainer RegisterType<T, TS>(string name, ITypeLifetimeManager lifetimeManager, params InjectionMember[] injectionMembers) where TS : T
         {
             return Container.RegisterType<T, TS>(name, lifetimeManager, injectionMembers);
         }
 
-        public static IUnityContainer RegisterType(Type from, Type to, LifetimeManager lifetimeManager)
+        public static IUnityContainer RegisterType(Type from, Type to, ITypeLifetimeManager lifetimeManager)
         {
             return Container.RegisterType(from, to, lifetimeManager);
         }
