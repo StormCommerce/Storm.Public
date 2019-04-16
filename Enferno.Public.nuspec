@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Enferno.Public</id>
-    <version>2.2.0</version>
+    <version>2.3.0</version>
     <title>Enferno Public</title>
     <authors>Storm Commerce AB</authors>
     <owners>Storm Commerce AB</owners>
@@ -10,10 +10,37 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Enferno API helpers.</description>
     <releaseNotes>
-      Updated references to Unity. Unity.Abstractions changed publicKeyToken going from 3.3.1 to 4.0.0.
-      Removed dependencies to unused stuff and sub dependencies. CommonServiceLocator and  Unity.Interception are removed.
+**BREAKING CHANGE**: Removed AddCache from CacheManager. Added constructor to handle additions of caches.
+This is due to the fact that Unity now does not support making multiple calls to methods when resolving components from configuration.
 
-      See release notes for 2.0.0 when upgrading from earlier versions.
+You will get a message similar to this "System.InvalidOperationException: Configuration is incorrect, the type CacheManager does not have a method named AddCache that takes parameters named cache."
+Just remove the method entries under register and add a constructor instead.
+
+Change:
+```xml
+&lt;register type="ICacheManager" mapTo="CacheManager"&gt;
+  &lt;lifetime type="singleton" /&gt;
+  &lt;method name="AddCache"&gt;
+    &lt;param name="cache" dependencyName="EnfernoData" /&gt;
+  &lt;/method&gt;
+&lt;/register&gt;
+```
+To:
+```xml
+&lt;register type="ICacheManager" mapTo="CacheManager"&gt;
+  &lt;lifetime type="singleton" /&gt;
+  &lt;constructor&gt;
+    &lt;param name="caches"&gt;
+      &lt;array&gt;
+      &lt;dependency name="EnfernoData"/&gt;
+      &lt;/array&gt;
+      &lt;/param&gt;
+  &lt;/constructor&gt;
+&lt;/register&gt;
+```
+Just add more entries under &lt;array&gt; if you are using multiple caches.
+
+See release notes for 2.0.0 when upgrading from earlier versions.
     </releaseNotes>
     <copyright>Copyright 2019</copyright>
     <tags>Enferno Public Storm Commerce</tags>

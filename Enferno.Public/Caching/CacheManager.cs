@@ -8,16 +8,13 @@ using Unity;
 
 using Enferno.Public.Caching.Configuration;
 using Enferno.Public.InversionOfControl;
-using Enferno.Public.Logging;
 
 namespace Enferno.Public.Caching
 {
     public class CacheManager : ICacheManager
     {
-        private static readonly object SyncRoot = new object();
-
-        private static readonly ICacheKeyLock CachekeyLock = new CacheKeyLock();
-        private static readonly ICacheKeyLock CachekeyNoLock = new CacheKeyNoLock();
+        private static readonly ICacheKeyLock CacheKeyLock = new CacheKeyLock();
+        private static readonly ICacheKeyLock CacheKeyNoLock = new CacheKeyNoLock();
 
         #region Singleton stuff
         // See http://csharpindepth.com/Articles/General/Singleton.aspx version 6.
@@ -33,35 +30,23 @@ namespace Enferno.Public.Caching
         private Dictionary<string, CacheConfiguration> Configurations { get; }
         private Dictionary<string, ICache> Caches { get; }
 
-        public CacheManager()
+        public CacheManager(params ICache[] caches)
         {
             Configurations = new Dictionary<string, CacheConfiguration>();
             Caches = new Dictionary<string, ICache>();
-        }
 
-        public void AddCache(ICache cache)
-        {
-            if (cache == null) throw new ArgumentNullException(nameof(cache));
-            if (Caches.ContainsKey(cache.Name)) return;
-
-            lock (SyncRoot)
+            foreach (var cache in caches)
             {
-                if (Caches.ContainsKey(cache.Name)) return;
+                if (Caches.ContainsKey(cache.Name)) continue;
                 Caches.Add(cache.Name, cache);
                 Configurations.Add(cache.Name, CacheConfiguration.Instance(cache.Name));
                 if (!cache.DurationMinutes.HasValue) cache.DurationMinutes = CacheConfiguration.Instance(cache.Name).DefaultDuration;
             }
-
-            Log.LogEntry.Categories(CategoryFlags.Debug)
-                .Message("CacheManager added cache {0} with cache duration {1}.", cache.Name, cache.DurationMinutes)
-                .Property("HasConfigurationFile", Configurations[cache.Name].HasFile)
-                .WriteVerbose();
         }
 
         private bool ShouldCache(string cacheName, string itemName)
         {
-            ICache cache;
-            if (!Caches.TryGetValue(cacheName, out cache)) return false;
+            if (!Caches.TryGetValue(cacheName, out _)) return false;
             var cfg = Configurations[cacheName];
             if (!cfg.HasFile) return true;
             var time = cfg.GetCacheTime(itemName);
@@ -283,8 +268,8 @@ namespace Enferno.Public.Caching
         public IDisposable AcquireLock(string cacheName, string key)
         {
             return !ShouldCache(cacheName, key) ? 
-                CachekeyNoLock.AcquireLock(key) : 
-                CachekeyLock.AcquireLock(cacheName + key);
+                CacheKeyNoLock.AcquireLock(key) : 
+                CacheKeyLock.AcquireLock(cacheName + key);
         }
 
         public void Flush(string cacheName, string dependencyName)

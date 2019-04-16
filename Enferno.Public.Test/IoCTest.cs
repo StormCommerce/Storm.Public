@@ -161,6 +161,7 @@ namespace Enferno.Public.Test
             Assert.IsInstanceOfType(obj1, typeof(BTest2));
             Assert.AreNotSame(obj1, obj2);
         }
+
     }
 
     #region Test classes and interfaces

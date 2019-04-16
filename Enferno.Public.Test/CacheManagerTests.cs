@@ -24,13 +24,12 @@ namespace Enferno.Public.Test
             // Arrange
             const string cacheName = "AccessClient";
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
-
+            var unused = new CacheManager(cache);
+            
             //Assert
             Assert.AreEqual(5, CacheConfiguration.Instance(cacheName).DefaultDuration, "Default duration");
-            Assert.AreEqual(5, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithDefaultDuration"), "Item with defafult duration");
+            Assert.AreEqual(5, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithDefaultDuration"), "Item with default duration");
             Assert.AreEqual(1, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWith1MinuteDuration"), "Item 1 min duration");
             Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithZeroDuration"), "Item 0 duration");
             Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("NonExistingItem"), "Non-existing 0 duration");    
@@ -42,9 +41,8 @@ namespace Enferno.Public.Test
             // Arrange
             const string cacheName = "CacheWithNoFile";
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var unused = new CacheManager(cache);
 
             //Assert
             Assert.AreEqual(null, CacheConfiguration.Instance(cacheName).DefaultDuration, "Default duration");
@@ -58,9 +56,8 @@ namespace Enferno.Public.Test
             const int basketId = 1;
             var basket = new ObjectWithAnId { Id = basketId };
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
             var cacheKeyBasket = cacheManager.GetKey("GetBasket", basketId);
 
@@ -83,9 +80,8 @@ namespace Enferno.Public.Test
             var basket = new ObjectWithAnId { Id = basketId };
             var checkout = new ObjectWithAnId { Id = basketId };
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
             var cacheKeyBasket = cacheManager.GetKey("GetBasket", basketId);
             var cacheKeyCheckout = cacheManager.GetKey("GetCheckout", basketId);
@@ -117,28 +113,25 @@ namespace Enferno.Public.Test
             // Arrange
             const string cacheName = "AccessClient";
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
-            ObjectWithAnId ignore;
-            int i;
- 
+
             // Act
             var key = cacheManager.GetKey("GetSomethingWithFlush", 1);
             var somethingIn = new ObjectWithAnId {Id = 1};
             var somethingOut = cacheManager.ExecuteFunction(cacheName, key, "Tag" + 1, () => somethingIn);
-            Assert.IsTrue(cacheManager.TryGet(cacheName, key,  out ignore));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, key,  out ObjectWithAnId _));
 
             key = cacheManager.GetKey("GetWhateverWithFlush", 1);
             const int whateverIn = 1;
             var whateverOut = cacheManager.ExecuteFunction(cacheName, key, "Tag" + 1, () => whateverIn);
-            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out i));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out int _));
 
             key = cacheManager.GetKey("GetSomethingWithFlush", 2);
             var somethingIn2 = new ObjectWithAnId { Id = 2 };
             var somethingOut2 = cacheManager.ExecuteFunction(cacheName, key, "Tag" + 2, () => somethingIn2);
-            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ignore));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ObjectWithAnId _));
             
             // Assert 1
             Assert.AreSame(somethingIn, somethingOut);
@@ -153,11 +146,11 @@ namespace Enferno.Public.Test
 
             // Assert 2
             key = cacheManager.GetKey("GetWhateverWithFlush", 1);
-            Assert.IsFalse(cacheManager.TryGet(cacheName, key, out i));
+            Assert.IsFalse(cacheManager.TryGet(cacheName, key, out int _));
             key = cacheManager.GetKey("GetSomethingWithFlush", 1);
-            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ignore));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ObjectWithAnId _));
             key = cacheManager.GetKey("GetSomethingWithFlush", 2);
-            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ignore));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ObjectWithAnId _));
         }
 
          [TestMethod, TestCategory("UnitTest")]
@@ -168,9 +161,8 @@ namespace Enferno.Public.Test
             const string email = "patrik@attentia.se";
             var newObject = new ObjectWithAnId {Id = 1};
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
             var cacheKey = cacheManager.GetKey("GetCustomerByEmail", email);
             
@@ -178,11 +170,10 @@ namespace Enferno.Public.Test
             if(!cacheManager.HasConfiguration(cacheName)) Assert.Fail("Should have a cache config file");
             var added = cacheManager.Add(cacheName, cacheKey, (ObjectWithAnId)null);
             Assert.IsFalse(added, "Should not be added.");
-            
-            object cached;
+
 
             cacheKey = cacheManager.GetKey("CreateCustomer", newObject);
-            cacheManager.TryGet(cacheName, cacheKey, out cached);
+            cacheManager.TryGet(cacheName, cacheKey, out object cached);
             Assert.IsNull(cached, "Should not have value in cache");
 
             added = cacheManager.Add(cacheName, cacheKey, newObject);
@@ -203,9 +194,8 @@ namespace Enferno.Public.Test
             var basket = new ObjectWithAnId { Id = basketId };
             var checkout = new ObjectWithAnId { Id = basketId };
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
             var cacheKeyBasket = cacheManager.GetKey("GetBasket", basketId);
             var cacheKeyCheckout = cacheManager.GetKey("GetCheckout", basketId);
@@ -218,10 +208,9 @@ namespace Enferno.Public.Test
             success = cacheManager.Add(cacheName, cacheKeyCheckout, checkout);
             Assert.IsTrue(success, "Checkout should be added.");
 
-            object cached;
 
             var cacheKeyInsertBasket = cacheManager.GetKey("InsertBasketItem", basket);
-            success = cacheManager.TryGet(cacheName, cacheKeyInsertBasket, out cached);
+            success = cacheManager.TryGet(cacheName, cacheKeyInsertBasket, out object cached);
             Assert.IsFalse(success, "Should not be there on that key.");
 
             var newBasket = new ObjectWithAnId { Id = basketId };
@@ -243,9 +232,8 @@ namespace Enferno.Public.Test
             const int customerId = 1;
             var existingCustomer = new ObjectWithAnIdAndData { Id = customerId, Data = "Data1"};
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
             //Act
             var cacheKeyCustomer = cacheManager.GetKey("GetCustomer", customerId);
@@ -253,16 +241,15 @@ namespace Enferno.Public.Test
             var success = cacheManager.Add(cacheName, cacheKeyCustomer, existingCustomer);
             Assert.IsTrue(success, "customer should be added.");
 
-            object cached;
 
             var cacheKeyUpdateCustomer = cacheManager.GetKey("UpdateCustomer", customerId);
-            success = cacheManager.TryGet(cacheName, cacheKeyUpdateCustomer, out cached);
+            success = cacheManager.TryGet(cacheName, cacheKeyUpdateCustomer, out object _);
             Assert.IsFalse(success, "Should not be there on that key.");
 
             var updatedCustomer = new ObjectWithAnIdAndData { Id = customerId, Data = "Data2" };
             success = cacheManager.Add(cacheName, cacheKeyUpdateCustomer, updatedCustomer);
             Assert.IsFalse(success, "Updated customer should now have flushed original key but not added this one.");
-            success = cacheManager.TryGet(cacheName, cacheKeyCustomer, out cached);
+            success = cacheManager.TryGet(cacheName, cacheKeyCustomer, out object _);
             Assert.IsFalse(success, "customer should have been flushed.");
         }
          [TestMethod, TestCategory("UnitTest")]
@@ -273,9 +260,8 @@ namespace Enferno.Public.Test
             const int customerId = 1;
             var existingCustomer = new ObjectWithAnIdAndData { Id = customerId, Data = "Data1" };
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
             //Act
             var cacheKeyCustomer = cacheManager.GetKey("GetCustomer", customerId);
@@ -283,16 +269,15 @@ namespace Enferno.Public.Test
             var success = cacheManager.Add(cacheName, cacheKeyCustomer, existingCustomer);
             Assert.IsTrue(success, "customer should be added.");
 
-            object cached;
 
             var cacheKeyUpdateCustomer = cacheManager.GetKey("UpdateCustomer2", customerId);
-            success = cacheManager.TryGet(cacheName, cacheKeyUpdateCustomer, out cached);
+            success = cacheManager.TryGet(cacheName, cacheKeyUpdateCustomer, out object cached);
             Assert.IsFalse(success, "Should not be there on that key.");
 
             var updatedCustomer = new ObjectWithAnIdAndData { Id = customerId, Data = "Data2" };
             success = cacheManager.Add(cacheName, cacheKeyUpdateCustomer, updatedCustomer);
             Assert.IsTrue(success, "Updated customer should now have replaced original key");
-            success = cacheManager.TryGet(cacheName, cacheKeyCustomer, out cached);
+            cacheManager.TryGet(cacheName, cacheKeyCustomer, out cached);
             Assert.AreSame(updatedCustomer, cached, "Should be the same in the cache after update");
         }
 
@@ -302,18 +287,16 @@ namespace Enferno.Public.Test
             // Arrange
             const string cacheName = "AccessClient";
 
-            var cacheManager = new CacheManager();
             var cache = new InMemoryTestCache(cacheName);
-            cacheManager.AddCache(cache);
+            var cacheManager = new CacheManager(cache);
 
-            int i;
 
             // Act
-            var dependency1 = new [] { "Customer1" };
-            var dependency2 = new[] { "Customer1", "Company1", "Pricelist1" };
+            var dependency1 = new[] { "Customer1" };
+            var dependency2 = new[] { "Customer1", "Company1", "PriceList1" };
 
             var dependency3 = new[] { "Customer2" };
-            var dependency4 = new[] { "Customer2", "Company2", "Pricelist2" };
+            var dependency4 = new[] { "Customer2", "Company2", "PriceList2" };
 
             cacheManager.ExecuteFunction(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 1), dependency1, () => 1);
             cacheManager.ExecuteFunction(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 1), dependency2, () => 2);
@@ -321,20 +304,20 @@ namespace Enferno.Public.Test
             cacheManager.ExecuteFunction(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 2), dependency4, () => 4);
 
             // Assert 1 All in cache
-            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 1), out i));
-            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 1), out i));
-            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 2), out i));
-            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 2), out i));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 1), out int _));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 1), out int _));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 2), out int _));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 2), out int _));
 
             // Act 2
             cacheManager.Flush(cacheName, "Customer1");
-            cacheManager.Flush(cacheName, "Pricelist2");
+            cacheManager.Flush(cacheName, "PriceList2");
 
             // Assert 2 Just item 3 in cache
-            Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 1), out i));
-            Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 1), out i));
-            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 2), out i));
-            Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 2), out i));
+            Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 1), out int _));
+            Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 1), out int _));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetSomethingWithFlush", 2), out int _));
+            Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 2), out int _));
         }
     }
 }

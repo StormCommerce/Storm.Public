@@ -6,8 +6,6 @@ namespace Enferno.Public.Caching
 {
     public interface ICacheManager
     {
-        void AddCache(ICache cache);
-
         string GetKey(string tag, params object[] keys);
         string GetArgumentKey(string cacheName, MethodInfo method, params object[] args);
 
