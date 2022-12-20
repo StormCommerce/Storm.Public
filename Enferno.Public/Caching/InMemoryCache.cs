@@ -10,7 +10,7 @@ namespace Enferno.Public.Caching
 
         public InMemoryCache(string name, int duration) : base(name)
         {
-            DurationMinutes = duration;
+            DurationSeconds = duration;
             MyCache = InMemoryCacheFactory.GetCache(Name);
         }
 

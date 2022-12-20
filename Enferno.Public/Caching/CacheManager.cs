@@ -40,7 +40,10 @@ namespace Enferno.Public.Caching
                 if (Caches.ContainsKey(cache.Name)) continue;
                 Caches.Add(cache.Name, cache);
                 Configurations.Add(cache.Name, CacheConfiguration.Instance(cache.Name));
-                if (!cache.DurationMinutes.HasValue) cache.DurationMinutes = CacheConfiguration.Instance(cache.Name).DefaultDuration;
+                if (!cache.DurationSeconds.HasValue)
+                {
+                    cache.DurationSeconds = CacheConfiguration.Instance(cache.Name).DefaultDuration;
+                }
             }
         }
 

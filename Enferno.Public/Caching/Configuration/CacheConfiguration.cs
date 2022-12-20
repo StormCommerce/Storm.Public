@@ -24,7 +24,7 @@ namespace Enferno.Public.Caching.Configuration
         }
         #endregion
 
-        public bool HasFile { get; private set; }
+        public bool HasFile { get; }
 
         /// <summary>
         /// Default duration in minutes.
@@ -33,8 +33,9 @@ namespace Enferno.Public.Caching.Configuration
 
         private readonly string configFile;
         private readonly string path;
-
-        private string FilePath { get { return Path.Combine(path, configFile); } }
+        private static Random random = new();
+        
+        private string FilePath => Path.Combine(path, configFile);
 
         private FileSystemWatcher watcher;
 
@@ -55,7 +56,7 @@ namespace Enferno.Public.Caching.Configuration
         {
             if (!HasFile) return;
 
-            watcher = new FileSystemWatcher(this.path, this.configFile) {NotifyFilter = NotifyFilters.LastWrite};
+            watcher = new FileSystemWatcher(path, this.configFile) {NotifyFilter = NotifyFilters.LastWrite};
             watcher.Changed += ConfigChanged;
 
             watcher.EnableRaisingEvents = true;
@@ -63,8 +64,7 @@ namespace Enferno.Public.Caching.Configuration
 
         private static string GetExecutionPath(string filename)
         {
-// ReSharper disable once PossibleNullReferenceException
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Remove(0, 6);
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)!.Remove(0, 6);
             if (File.Exists(Path.Combine(path, filename))) return path;
             path = path.Substring(0, path.LastIndexOf(Path.DirectorySeparatorChar));
             return Path.Combine(path, "App_Data");
@@ -99,7 +99,7 @@ namespace Enferno.Public.Caching.Configuration
 
                 if (cfg == null) return;
 
-                defaultDuration = int.Parse((string)cfg.Attribute("duration")) / 60;
+                defaultDuration = int.Parse((string)cfg.Attribute("duration")) ;
 
                 var items = cfg.Descendants("Item");
                 foreach (var item in items)
@@ -124,9 +124,9 @@ namespace Enferno.Public.Caching.Configuration
         private CacheDefinition CreateDefinition(int defaultDuration, XElement item)
         {
             int duration;
-            if (item.Attribute("duration") == null || !int.TryParse(item.Attribute("duration").Value, out duration)) duration = defaultDuration * 60;
-            duration = duration/60;
-
+            if (item.Attribute("duration") == null || !int.TryParse(item.Attribute("duration").Value, out duration)) duration = defaultDuration;
+            duration = OffsetDuration(duration);
+            
             var format = item.Attribute("redirectformat") != null ? item.Attribute("redirectformat").Value : null;
             var propertyPath = item.Attribute("propertypath") != null ? item.Attribute("propertypath").Value : null;
             var argumentName = item.Attribute("argumentname") != null ? item.Attribute("argumentname").Value : null;
@@ -143,10 +143,23 @@ namespace Enferno.Public.Caching.Configuration
             };
         }
 
+        private static int OffsetDuration(int duration)
+        {
+            int min = duration * 90 / 100;
+            int max = duration * 110 / 100;
+
+            return random.Next(min, max);
+        }
+
         public int GetCacheTime(string itemName)
         {
             CacheDefinition definition;
-            return configuration.TryGetValue(itemName, out definition) ? definition.Duration.GetValueOrDefault(DefaultDuration.GetValueOrDefault(0)) : 0;
+            if (configuration.TryGetValue(itemName, out definition))
+            {
+                return definition.Duration.GetValueOrDefault(DefaultDuration.GetValueOrDefault(0));
+            }
+
+            return 0;
         }
 
         public string GetRedirectFormat(string itemName)
