@@ -1,5 +1,4 @@
-﻿
-using Enferno.Public.Caching;
+﻿using Enferno.Public.Caching;
 using Enferno.Public.Caching.Configuration;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,33 +8,100 @@ namespace Enferno.Public.Test
     {
         public int Id { get; set; }
     }
+
     public class ObjectWithAnIdAndData
     {
         public int Id { get; set; }
-        public string Data{ get; set; }
+        public string Data { get; set; }
     }
 
     [TestClass]
     public class CacheManagerTests
     {
-         [TestMethod, TestCategory("UnitTest")]
-        public void CacheConfigDurationTest()
+        [TestMethod, TestCategory("UnitTest")]
+        public void CacheConfigDefaultDurationTest()
         {
             // Arrange
             const string cacheName = "AccessClient";
 
             var cache = new InMemoryTestCache(cacheName);
             var unused = new CacheManager(cache);
-            
+
             //Assert
-            Assert.AreEqual(5, CacheConfiguration.Instance(cacheName).DefaultDuration, "Default duration");
-            Assert.AreEqual(5, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithDefaultDuration"), "Item with default duration");
-            Assert.AreEqual(1, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWith1MinuteDuration"), "Item 1 min duration");
-            Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithZeroDuration"), "Item 0 duration");
-            Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("NonExistingItem"), "Non-existing 0 duration");    
+            Assert.AreEqual(300, CacheConfiguration.Instance(cacheName).DefaultDuration, "Default duration");
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
+        public void CacheConfigGetEntityWithDefaultDurationDurationTest()
+        {
+            // Arrange
+            const string cacheName = "AccessClient";
+
+            var cache = new InMemoryTestCache(cacheName);
+            var unused = new CacheManager(cache);
+
+            //Assert
+            var betweenTestData = new BetweenTestData
+            {
+                Actual = CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithDefaultDuration"),
+
+                MinValue = 270,
+                MaxValue = 330
+                
+            };
+            Assert.IsTrue(betweenTestData.IsValid, $"Item with default duration: {betweenTestData.GetErrorMessage()}");
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void CacheConfigGetEntityWith1MinuteDurationDurationTest()
+        {
+            // Arrange
+            const string cacheName = "AccessClient";
+
+            var cache = new InMemoryTestCache(cacheName);
+            var unused = new CacheManager(cache);
+
+            var offsetted60SecondsDuration = CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWith1MinuteDuration");
+
+            var betweenTestData = new BetweenTestData
+            {
+                Actual = offsetted60SecondsDuration,
+
+                MinValue = 54,
+                MaxValue = 66
+                
+            };
+            Assert.IsTrue(betweenTestData.IsValid, $"Item 1 min duration {betweenTestData.GetErrorMessage()}");
+
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void CacheConfigGetEntityWithZeroDurationDurationTest()
+        {
+            // Arrange
+            const string cacheName = "AccessClient";
+
+            var cache = new InMemoryTestCache(cacheName);
+            var unused = new CacheManager(cache);
+
+            //Assert
+            Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("GetEntityWithZeroDuration"), "Item 0 duration");
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
+        public void CacheConfigNonExistingItemDurationTest()
+        {
+            // Arrange
+            const string cacheName = "AccessClient";
+
+            var cache = new InMemoryTestCache(cacheName);
+            var unused = new CacheManager(cache);
+
+            //Assert
+            Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("NonExistingItem"), "Non-existing 0 duration");
+        }
+
+        [TestMethod, TestCategory("UnitTest")]
         public void CacheConfigDurationWhenNoFileTest()
         {
             // Arrange
@@ -49,7 +115,7 @@ namespace Enferno.Public.Test
             Assert.AreEqual(0, CacheConfiguration.Instance(cacheName).GetCacheTime("WhatEver"));
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetBasketWithExecuteFunctionWithRedirectTest()
         {
             const string cacheName = "AccessClient";
@@ -67,12 +133,12 @@ namespace Enferno.Public.Test
             // Assert
             Assert.AreSame(cached, basket);
             Assert.IsTrue(cacheManager.TryGet(cacheName, cacheKeyBasket, out cached));
-            
+
             Assert.IsTrue(cache.TryGet("Basket1", out cached));
             Assert.AreSame(cached, basket);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetBasketWithExecuteFunctionWithRedirectAndClearTest()
         {
             const string cacheName = "AccessClient";
@@ -97,7 +163,7 @@ namespace Enferno.Public.Test
             Assert.IsTrue(cacheManager.TryGet(cacheName, cacheKeyCheckout, out cachedCheckout));
 
             // Act 2
-            var modifiedBasket = new ObjectWithAnId {Id = basketId};
+            var modifiedBasket = new ObjectWithAnId { Id = basketId };
             var cacheKeyInsert = cacheManager.GetKey("InsertBasketItem", modifiedBasket.Id);
             cacheManager.Add(cacheName, cacheKeyInsert, modifiedBasket);
 
@@ -107,7 +173,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(cachedBasket, modifiedBasket);
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void FlushItemsByTagTest()
         {
             // Arrange
@@ -119,9 +185,9 @@ namespace Enferno.Public.Test
 
             // Act
             var key = cacheManager.GetKey("GetSomethingWithFlush", 1);
-            var somethingIn = new ObjectWithAnId {Id = 1};
+            var somethingIn = new ObjectWithAnId { Id = 1 };
             var somethingOut = cacheManager.ExecuteFunction(cacheName, key, "Tag" + 1, () => somethingIn);
-            Assert.IsTrue(cacheManager.TryGet(cacheName, key,  out ObjectWithAnId _));
+            Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ObjectWithAnId _));
 
             key = cacheManager.GetKey("GetWhateverWithFlush", 1);
             const int whateverIn = 1;
@@ -132,7 +198,7 @@ namespace Enferno.Public.Test
             var somethingIn2 = new ObjectWithAnId { Id = 2 };
             var somethingOut2 = cacheManager.ExecuteFunction(cacheName, key, "Tag" + 2, () => somethingIn2);
             Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ObjectWithAnId _));
-            
+
             // Assert 1
             Assert.AreSame(somethingIn, somethingOut);
             Assert.AreEqual(whateverIn, whateverOut);
@@ -153,21 +219,21 @@ namespace Enferno.Public.Test
             Assert.IsTrue(cacheManager.TryGet(cacheName, key, out ObjectWithAnId _));
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetNullDataAndThenFlushItToCreateNew()
         {
             // Arrange
             const string cacheName = "AccessClient";
             const string email = "patrik@attentia.se";
-            var newObject = new ObjectWithAnId {Id = 1};
+            var newObject = new ObjectWithAnId { Id = 1 };
 
             var cache = new InMemoryTestCache(cacheName);
             var cacheManager = new CacheManager(cache);
 
             var cacheKey = cacheManager.GetKey("GetCustomerByEmail", email);
-            
+
             //Act
-            if(!cacheManager.HasConfiguration(cacheName)) Assert.Fail("Should have a cache config file");
+            if (!cacheManager.HasConfiguration(cacheName)) Assert.Fail("Should have a cache config file");
             var added = cacheManager.Add(cacheName, cacheKey, (ObjectWithAnId)null);
             Assert.IsFalse(added, "Should not be added.");
 
@@ -185,7 +251,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(newObject, cached, "Now it should be cached.");
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetBasketThenInsertWithCacheRefresh()
         {
             // Arrange
@@ -224,13 +290,13 @@ namespace Enferno.Public.Test
             Assert.IsNull(cached, "Checkout should have been flushed");
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void GetCustomerThenUpdateWithRedirectFormatTest()
         {
             // Arrange
             const string cacheName = "AccessClient";
             const int customerId = 1;
-            var existingCustomer = new ObjectWithAnIdAndData { Id = customerId, Data = "Data1"};
+            var existingCustomer = new ObjectWithAnIdAndData { Id = customerId, Data = "Data1" };
 
             var cache = new InMemoryTestCache(cacheName);
             var cacheManager = new CacheManager(cache);
@@ -252,7 +318,8 @@ namespace Enferno.Public.Test
             success = cacheManager.TryGet(cacheName, cacheKeyCustomer, out object _);
             Assert.IsFalse(success, "customer should have been flushed.");
         }
-         [TestMethod, TestCategory("UnitTest")]
+
+        [TestMethod, TestCategory("UnitTest")]
         public void GetCustomerThenUpdateWithRefreshFormatTest()
         {
             // Arrange
@@ -281,7 +348,7 @@ namespace Enferno.Public.Test
             Assert.AreSame(updatedCustomer, cached, "Should be the same in the cache after update");
         }
 
-         [TestMethod, TestCategory("UnitTest")]
+        [TestMethod, TestCategory("UnitTest")]
         public void FlushItemsByMultipleDependencyNamesTest()
         {
             // Arrange
@@ -320,4 +387,18 @@ namespace Enferno.Public.Test
             Assert.IsFalse(cacheManager.TryGet(cacheName, cacheManager.GetKey("GetWhateverWithFlush", 2), out int _));
         }
     }
+    
+    internal class BetweenTestData
+    {
+        public int MaxValue { get; set; }
+        public int MinValue { get; set; }
+        public int Actual { get; set; }
+
+        public bool IsValid => MaxValue >= Actual && Actual >= MinValue;
+        public string GetErrorMessage()
+        {
+            return $"Expected: {MaxValue} >= Actual >= {MinValue} Actual: <{Actual}>.";
+        }
+    }
+    
 }

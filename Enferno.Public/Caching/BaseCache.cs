@@ -21,7 +21,7 @@ namespace Enferno.Public.Caching
     public abstract class BaseCache : ICache
     {
         public string Name { get; protected set; }
-        public int? DurationMinutes { get; set; }
+        public int? DurationSeconds { get; set; }
 
         protected static readonly NullObject CacheNullObject = new NullObject();
 
@@ -96,13 +96,13 @@ namespace Enferno.Public.Caching
             /*NOOP*/
         }
 
-        private TimeSpan GetDurationTimeSpan(int? durationMinutes)
+        private TimeSpan GetDurationTimeSpan(int? durationSeconds)
         {
-            var duration = durationMinutes.HasValue && durationMinutes.Value != 0
-                ? TimeSpan.FromMinutes(durationMinutes.Value)
-                : DurationMinutes.HasValue
-                    ? TimeSpan.FromMinutes(DurationMinutes.Value)
-                    : TimeSpan.FromMinutes(5);
+            var duration = durationSeconds.HasValue && durationSeconds.Value != 0
+                ? TimeSpan.FromSeconds(durationSeconds.Value)
+                : DurationSeconds.HasValue
+                    ? TimeSpan.FromSeconds(DurationSeconds.Value)
+                    : TimeSpan.FromSeconds(5*60);
             return duration;
         }
     }
