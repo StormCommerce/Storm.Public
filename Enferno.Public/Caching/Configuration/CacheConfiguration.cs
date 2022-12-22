@@ -24,7 +24,7 @@ namespace Enferno.Public.Caching.Configuration
         }
         #endregion
 
-        public bool HasFile { get; }
+        public bool HasFile { get; private set; }
 
         /// <summary>
         /// Default duration in minutes.
@@ -33,10 +33,9 @@ namespace Enferno.Public.Caching.Configuration
 
         private readonly string configFile;
         private readonly string path;
-        private static Random random = new();
+        private static Random random = new Random();
         
-        private string FilePath => Path.Combine(path, configFile);
-
+        private string FilePath { get { return Path.Combine(path, configFile); } }
         private FileSystemWatcher watcher;
 
         private Dictionary<string, CacheDefinition> configuration;
@@ -64,7 +63,7 @@ namespace Enferno.Public.Caching.Configuration
 
         private static string GetExecutionPath(string filename)
         {
-            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase)!.Remove(0, 6);
+            var path = Path.GetDirectoryName(Assembly.GetExecutingAssembly().GetName().CodeBase).Remove(0, 6);
             if (File.Exists(Path.Combine(path, filename))) return path;
             path = path.Substring(0, path.LastIndexOf(Path.DirectorySeparatorChar));
             return Path.Combine(path, "App_Data");
