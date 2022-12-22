@@ -1,11 +1,8 @@
 name: Enferno.Public - $(majorMinorVersion).$(semanticVersion)$(versionSuffix) -
 
 trigger:
-  - production
-  - dev
   - master
-  - feature/*
-  - hotfix/*
+  - beta
 
 pool:
   vmImage: 'windows-latest'
