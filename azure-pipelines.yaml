@@ -10,7 +10,7 @@ pool:
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
-  majorMinorVersion: 2.4
+  majorMinorVersion: 2.5
   semanticVersion: $[counter(variables['majorMinorVersion'], 0)]
   ${{ if eq(variables['Build.SourceBranchName'], 'master') }}:
     versionSuffix: ''
@@ -24,6 +24,22 @@ variables:
 steps:
   - task: NuGetToolInstaller@1 # Ensure nuget is installed
     displayName: Install nuget
+
+  - task: Assembly-Info-NetFramework@2
+    displayName: Update version number in projects
+    inputs:
+      Path: '$(Build.SourcesDirectory)'
+      FileNames: |
+        **\AssemblyInfo.cs
+      InsertAttributes: true
+      FileEncoding: 'auto'
+      WriteBOM: false
+      VersionNumber: '$(version)'
+      FileVersionNumber: '$(version)'
+      InformationalVersion: '$(version)$(versionSuffix)'
+      LogLevel: 'verbose'
+      FailOnWarning: false
+      DisableTelemetry: false
 
   - task: NuGetCommand@2
     displayName: Nuget Restore
