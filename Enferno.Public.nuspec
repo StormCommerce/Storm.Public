@@ -46,9 +46,8 @@ See release notes for 2.0.0 when upgrading from earlier versions.
     <tags>Enferno Public Storm Commerce</tags>
     <dependencies>
       <dependency id="EnterpriseLibrary.Logging" version="6.0.1304.0" />
-      <dependency id="Unity.Container" version="5.9.5" />
+      <dependency id="Unity.Container" version="4.0.3" />
       <dependency id="Unity.Configuration" version="5.9.1" />
-      <dependency id="Unity.Abstractions" version="4.0.3" />
     </dependencies>
   </metadata>
   <files>
