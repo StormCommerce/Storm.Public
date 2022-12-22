@@ -76,6 +76,7 @@ steps:
       versioningScheme: byEnvVar
       versionEnvVar: versionAndSuffix
       verbosityPack: 'Detailed'
+      configuration: '$(buildConfiguration)'
 
   - task: NuGetCommand@2
     displayName: Nuget Pack for azure feed
@@ -87,6 +88,7 @@ steps:
       versioningScheme: byEnvVar
       versionEnvVar: versionAndSuffix
       verbosityPack: 'Detailed'
+      configuration: '$(buildConfiguration)'
 
   - task: PublishBuildArtifacts@1
     displayName: 'Publish Nuget Artifacts for nuget.org'
