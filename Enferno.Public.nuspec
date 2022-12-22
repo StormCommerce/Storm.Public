@@ -42,12 +42,13 @@ Just add more entries under &lt;array&gt; if you are using multiple caches.
 
 See release notes for 2.0.0 when upgrading from earlier versions.
     </releaseNotes>
-    <copyright>Copyright 2019</copyright>
+    <copyright>Copyright 2022</copyright>
     <tags>Enferno Public Storm Commerce</tags>
     <dependencies>
       <dependency id="EnterpriseLibrary.Logging" version="6.0.1304.0" />
-      <dependency id="Unity.Container" version="4.0.3" />
-      <dependency id="Unity.Configuration" version="5.9.0" />
+      <dependency id="Unity.Container" version="5.11.11" />
+      <dependency id="Unity.Configuration" version="5.11.2" />
+      <dependency id="Unity.Abstractions" version="5.11.7" />
     </dependencies>
   </metadata>
   <files>
