@@ -51,8 +51,8 @@ See release notes for 2.0.0 when upgrading from earlier versions.
     </dependencies>
   </metadata>
   <files>
-    <file src="Enferno.Public\bin\Debug\Enferno.Public.dll" target="lib/net45" />
-    <file src="Enferno.Public\bin\Debug\Enferno.Public.pdb" target="lib/net45" />
+    <file src="Enferno.Public\bin\*\Enferno.Public.dll" target="lib/net45" />
+    <file src="Enferno.Public\bin\*\Enferno.Public.pdb" target="lib/net45" />
     <file src="Enferno.Public\**\*.cs" target="src" />
   </files>
 </package>
