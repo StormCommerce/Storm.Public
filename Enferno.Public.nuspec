@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Enferno.Public</id>
-    <version>2.5.11</version>
+    <version>2.5.14</version>
     <title>Enferno Public</title>
     <authors>Storm Commerce AB</authors>
     <owners>Storm Commerce AB</owners>
@@ -46,9 +46,11 @@ See release notes for 2.0.0 when upgrading from earlier versions.
     <copyright>Copyright 2023</copyright>
     <tags>Enferno Public Storm Commerce</tags>
     <dependencies>
-      <dependency id="EnterpriseLibrary.Logging" version="6.0.1304.0" />
-      <dependency id="Unity.Container" version="5.11.5" />
-      <dependency id="Unity.Configuration" version="5.11.2" />
+      <group targetFramework=".NETFramework4.7.2">
+        <dependency id="EnterpriseLibrary.Logging" version="6.0.1304.0" />
+        <dependency id="Unity.Container" version="5.11.5" />
+        <dependency id="Unity.Configuration" version="5.11.2" />
+      </group>
     </dependencies>
   </metadata>
   <files>
