@@ -16,19 +16,19 @@ namespace Enferno.Public.Extensions
 
         internal static void AddClientId(this LogEntry logEntry)
         {
-            logEntry.AddKeyIfMissing(ActivityExtensions.ClientIdKey, Activity.Current.GetClientId());
+            logEntry?.AddKeyIfMissing(ActivityExtensions.ClientIdKey, Activity.Current.GetClientId());
         }
 
         internal static void AddApplicationId(this LogEntry logEntry)
         {
-            logEntry.AddKeyIfMissing(ActivityExtensions.ApplicationIdKey, Activity.Current.GetApplicationId());
+            logEntry?.AddKeyIfMissing(ActivityExtensions.ApplicationIdKey, Activity.Current.GetApplicationId());
         }
 
         private static void AddKeyIfMissing(this LogEntry logEntry, string key, object value)
         {
-            if (value != null && !logEntry.ExtendedProperties.ContainsKey(key))
+            if (value != null && !(logEntry?.ExtendedProperties.ContainsKey(key) ?? false))
             {
-                logEntry.ExtendedProperties.Add(key, value);
+                logEntry?.ExtendedProperties.Add(key, value);
             }
         }
     }
