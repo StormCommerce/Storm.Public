@@ -70,9 +70,11 @@
     <Compile Include="Caching\InMemoryCache.cs" />
     <Compile Include="Caching\InMemoryCacheFactory.cs" />
     <Compile Include="Caching\NullCache.cs" />
+    <Compile Include="Extensions\LogEntryExtensions.cs" />
     <Compile Include="Imaging\Image.cs" />
     <Compile Include="InversionOfControl\IoC.cs" />
     <Compile Include="InversionOfControl\TransientCallbackLifetimeManager.cs" />
+    <Compile Include="Extensions\ActivityExtensions.cs" />
     <Compile Include="Logging\CategoryFlags.cs" />
     <Compile Include="Logging\Configuration\DesignResources.Designer.cs" />
     <Compile Include="Logging\Configuration\RollingXmlTraceListenerData.cs" />

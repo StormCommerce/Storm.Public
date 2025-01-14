@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Enferno.Public.Extensions;
+using static Unity.Storage.RegistrationSet;
 
 namespace Enferno.Public.Logging
 {
@@ -85,6 +87,24 @@ namespace Enferno.Public.Logging
         public LogEntryWrapper Title(string title)
         {
             entry.Title = title;
+            return this;
+        }
+
+        public LogEntryWrapper Client(int clientId)
+        {
+            if (ShouldBeLogged)
+            {
+                entry.ExtendedProperties[ActivityExtensions.ClientIdKey] = clientId;
+            }
+            return this;
+        }
+
+        public LogEntryWrapper Application(int applicationId)
+        {
+            if (ShouldBeLogged)
+            {
+                entry.ExtendedProperties[ActivityExtensions.ApplicationIdKey] = applicationId;
+            }
             return this;
         }
 
@@ -245,42 +265,11 @@ namespace Enferno.Public.Logging
                 entry.AddErrorMessage(item);
             }
 
-            AddTraceAndSpanIdIfMissing(entry);
-            AddDiagnosticTagsToLog(entry);
+            entry.AddTraceIdAndSpanId();
+            entry.AddClientId();
+            entry.AddApplicationId();
 
             Log.Write(entry);
-        }
-
-        private void AddDiagnosticTagsToLog(LogEntry logEntry)
-        {
-            if (!ShouldBeLogged) return;
-            if (Activity.Current?.Tags != null)
-            {
-                foreach (var tag in Activity.Current?.Tags)
-                {
-                    AddKeyIfMissing(logEntry, tag.Key, tag.Value);
-
-                }
-            }
-        }
-
-        private const string spanIdKey = "span_id";
-        private const string traceIdKey = "trace_id";
-
-        private void AddTraceAndSpanIdIfMissing(LogEntry logEntry)
-        {
-            if (!ShouldBeLogged) return;
-
-            AddKeyIfMissing(logEntry, traceIdKey, Activity.Current?.TraceId);
-            AddKeyIfMissing(logEntry, spanIdKey, Activity.Current?.SpanId);
-        }
-
-        private void AddKeyIfMissing(LogEntry logEntry, string key, object value)
-        {
-            if (value != null && !logEntry.ExtendedProperties.ContainsKey(key))
-            {
-                logEntry.ExtendedProperties.Add(key, value);
-            }
         }
 
         private static bool IsLogged(string key)
