@@ -12,6 +12,7 @@ namespace Enferno.Public.Extensions
             if (activity.HasRemoteParent || activity.Parent == null)
             {
                 activity?.SetBaggage(key, value);
+                activity?.SetTag(key, value);
             }
             else
             {
