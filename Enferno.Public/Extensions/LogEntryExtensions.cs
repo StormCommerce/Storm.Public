@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.Logging;
+﻿using Enferno.Public.Utils;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System.Diagnostics;
 
 namespace Enferno.Public.Extensions
@@ -16,12 +17,12 @@ namespace Enferno.Public.Extensions
 
         internal static void AddClientId(this LogEntry logEntry)
         {
-            logEntry?.AddKeyIfMissing(ActivityExtensions.ClientIdKey, Activity.Current?.GetClientId());
+            logEntry?.AddKeyIfMissing(TagKeyEnum.ClientId, Activity.Current?.GetClientId());
         }
 
         internal static void AddApplicationId(this LogEntry logEntry)
         {
-            logEntry?.AddKeyIfMissing(ActivityExtensions.ApplicationIdKey, Activity.Current?.GetApplicationId());
+            logEntry?.AddKeyIfMissing(TagKeyEnum.ApplicationId, Activity.Current?.GetApplicationId());
         }
 
         private static void AddKeyIfMissing(this LogEntry logEntry, string key, object value)

@@ -88,6 +88,7 @@
     <Compile Include="Logging\TraceTraceListener.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\DistanceCalculator.cs" />
+    <Compile Include="Utils\TagKeyEnum.cs" />
     <Compile Include="Utils\Validation.cs" />
   </ItemGroup>
   <ItemGroup>

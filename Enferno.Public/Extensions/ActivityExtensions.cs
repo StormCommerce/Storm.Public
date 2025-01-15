@@ -1,30 +1,40 @@
 ﻿using System.Diagnostics;
+using Enferno.Public.Utils;
 
 namespace Enferno.Public.Extensions
 {
     public static class ActivityExtensions
     {
-        internal const string ApplicationIdKey = "ApplicationId";
-        internal const string ClientIdKey = "ClientId";
 
-        public static void SetClient(this Activity activity, int? clientId)
+        public static void SetPropertyOnTrace(this Activity activity, string key, string value)
         {
-            activity?.SetBaggage(ClientIdKey, clientId?.ToString());
+            activity?.SetBaggage(key, value);
+            activity?.Parent?.SetPropertyOnTrace(key, value);
         }
 
-        internal static string  GetClientId(this Activity activity)
+        public static void SetPropertyOnSpanAndSubSpan(this Activity activity, string key, string value)
         {
-            return activity?.GetBaggageItem(ClientIdKey);
+            activity?.SetBaggage(key, value);
         }
 
-        public static void SetApplication(this Activity activity, int? applicationId)
+        public static void SetClientOnTrace(this Activity activity, int? clientId)
         {
-            activity?.SetBaggage(ApplicationIdKey, applicationId?.ToString());
+            activity.SetPropertyOnTrace(TagKeyEnum.ClientId, clientId?.ToString());
+        }
+
+        internal static string GetClientId(this Activity activity)
+        {
+            return activity?.GetBaggageItem(TagKeyEnum.ClientId);
+        }
+
+        public static void SetApplicationOnTrace(this Activity activity, int? applicationId)
+        {
+            activity.SetPropertyOnTrace(TagKeyEnum.ApplicationId, applicationId?.ToString());
         }
 
         internal static string GetApplicationId(this Activity activity)
         {
-            return activity?.GetBaggageItem(ApplicationIdKey);
+            return activity?.GetBaggageItem(TagKeyEnum.ApplicationId);
         }
     }
 }
