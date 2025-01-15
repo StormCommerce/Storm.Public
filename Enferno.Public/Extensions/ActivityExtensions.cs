@@ -8,8 +8,15 @@ namespace Enferno.Public.Extensions
 
         public static void SetPropertyOnTrace(this Activity activity, string key, string value)
         {
-            activity?.SetBaggage(key, value);
-            activity?.Parent?.SetPropertyOnTrace(key, value);
+            if (activity == null) return;
+            if (activity.HasRemoteParent || activity.Parent == null)
+            {
+                activity?.SetBaggage(key, value);
+            }
+            else
+            {
+                activity.Parent.SetPropertyOnTrace(key, value);
+            }
         }
 
         public static void SetPropertyOnSpanAndSubSpan(this Activity activity, string key, string value)
