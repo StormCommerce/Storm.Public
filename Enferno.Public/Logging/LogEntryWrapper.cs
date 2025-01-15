@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Enferno.Public.Extensions;
+using Enferno.Public.Utils;
 using static Unity.Storage.RegistrationSet;
 
 namespace Enferno.Public.Logging
@@ -94,7 +95,7 @@ namespace Enferno.Public.Logging
         {
             if (ShouldBeLogged)
             {
-                entry.ExtendedProperties[ActivityExtensions.ClientIdKey] = clientId;
+                entry.ExtendedProperties[TagKeyEnum.ClientId] = clientId;
             }
             return this;
         }
@@ -103,7 +104,7 @@ namespace Enferno.Public.Logging
         {
             if (ShouldBeLogged)
             {
-                entry.ExtendedProperties[ActivityExtensions.ApplicationIdKey] = applicationId;
+                entry.ExtendedProperties[TagKeyEnum.ApplicationId] = applicationId;
             }
             return this;
         }
