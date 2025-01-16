@@ -20,7 +20,7 @@ namespace Enferno.Public.Extensions
         {
             foreach (var key in TagKeyEnum.KeysToLog)
             {
-                logEntry?.AddKeyIfMissing(TagKeyEnum.ClientId, key.Value.GetValue(Activity.Current?.GetProperty(key.Key)));
+                logEntry?.AddKeyIfMissing(key.Key, key.Value.GetValue(Activity.Current?.GetProperty(key.Key)));
             }
         }
 
