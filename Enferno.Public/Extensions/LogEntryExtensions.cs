@@ -11,8 +11,8 @@ namespace Enferno.Public.Extensions
 
         internal static void AddTraceIdAndSpanId(this LogEntry logEntry)
         {
-            logEntry?.AddKeyIfMissing( TraceIdKey, Activity.Current?.TraceId);
-            logEntry?.AddKeyIfMissing( SpanIdKey, Activity.Current?.SpanId);
+            logEntry?.AddKeyIfMissing(TraceIdKey, Activity.Current?.TraceId);
+            logEntry?.AddKeyIfMissing(SpanIdKey, Activity.Current?.SpanId);
         }
 
         internal static void AddClientId(this LogEntry logEntry)
