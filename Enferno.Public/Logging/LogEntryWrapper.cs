@@ -267,8 +267,8 @@ namespace Enferno.Public.Logging
             }
 
             entry.AddTraceIdAndSpanId();
-            entry.AddClientId();
-            entry.AddApplicationId();
+            entry.AddActivityKeysToLog();
+         
 
             Log.Write(entry);
         }

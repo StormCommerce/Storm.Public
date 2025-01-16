@@ -11,8 +11,7 @@ namespace Enferno.Public.Extensions
             if (activity == null) return;
             if (activity.HasRemoteParent || activity.Parent == null)
             {
-                activity?.SetBaggage(key, value?.ToString());
-                activity?.SetTag(key, value);
+                activity.SetPropertyOnSpan(key,value);
             }
             else
             {
@@ -20,28 +19,39 @@ namespace Enferno.Public.Extensions
             }
         }
 
+        public static void SetPropertyOnSpan(this Activity activity, string key, object value)
+        {
+            activity?.SetBaggage(key, value?.ToString());
+            activity?.SetTag(key, value);
+        }
+
+        internal static string GetProperty(this Activity activity, string key)
+        {
+            return activity?.GetBaggageItem(key);
+        } 
+
         public static void SetClientOnTrace(this Activity activity, int? clientId)
         {
             activity.SetPropertyOnTrace(TagKeyEnum.ClientId, clientId);
         }
 
-        internal static int? GetClientId(this Activity activity)
-        {
-            if (Int32.TryParse(activity?.GetBaggageItem(TagKeyEnum.ClientId), out int result))
-                return result;
-            return null;
-        }
+        //internal static int? GetClientId(this Activity activity)
+        //{
+        //    if (Int32.TryParse(activity?.GetBaggageItem(TagKeyEnum.ClientId), out int result))
+        //        return result;
+        //    return null;
+        //}
 
         public static void SetApplicationOnTrace(this Activity activity, int? applicationId)
         {
             activity.SetPropertyOnTrace(TagKeyEnum.ApplicationId, applicationId);
         }
 
-        internal static int? GetApplicationId(this Activity activity)
-        {
-            if (Int32.TryParse(activity?.GetBaggageItem(TagKeyEnum.ApplicationId), out int result))
-                return result;
-            return null;
-        }
+        //internal static int? GetApplicationId(this Activity activity)
+        //{
+        //    if (Int32.TryParse(activity?.GetBaggageItem(TagKeyEnum.ApplicationId), out int result))
+        //        return result;
+        //    return null;
+        //}
     }
 }

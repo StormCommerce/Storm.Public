@@ -1,5 +1,6 @@
 ﻿using Enferno.Public.Utils;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
+using System;
 using System.Diagnostics;
 
 namespace Enferno.Public.Extensions
@@ -15,14 +16,12 @@ namespace Enferno.Public.Extensions
             logEntry?.AddKeyIfMissing(SpanIdKey, Activity.Current?.SpanId);
         }
 
-        internal static void AddClientId(this LogEntry logEntry)
+        internal static void AddActivityKeysToLog(this LogEntry logEntry)
         {
-            logEntry?.AddKeyIfMissing(TagKeyEnum.ClientId, Activity.Current?.GetClientId());
-        }
-
-        internal static void AddApplicationId(this LogEntry logEntry)
-        {
-            logEntry?.AddKeyIfMissing(TagKeyEnum.ApplicationId, Activity.Current?.GetApplicationId());
+            foreach (var key in TagKeyEnum.KeysToLog)
+            {
+                logEntry?.AddKeyIfMissing(TagKeyEnum.ClientId, key.Value.GetValue(Activity.Current?.GetProperty(key.Key)));
+            }
         }
 
         private static void AddKeyIfMissing(this LogEntry logEntry, string key, object value)
