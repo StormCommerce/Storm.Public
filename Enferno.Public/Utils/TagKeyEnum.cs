@@ -5,9 +5,10 @@ namespace Enferno.Public.Utils
 {
     public static class TagKeyEnum
     {
+        //Add these to stage.labels in config.alloy in kube-application-state
         public const string ApplicationId = "ApplicationId";
         public const string ClientId = "ClientId";
-        public const string BasketId = "BasketId";
+        public const string BasketId = "basketId";
         public const string JobId = "JobId";
         public const string JobKey = "JobKey";
 
