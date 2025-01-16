@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 
 namespace Enferno.Public.Utils
 {
@@ -12,7 +11,7 @@ namespace Enferno.Public.Utils
         public const string JobId = "JobId";
         public const string JobKey = "JobKey";
 
-        internal static Dictionary<string,LoggProperty> KeysToLog { get; } = new Dictionary<string, LoggProperty>()
+        internal static Dictionary<string, LoggProperty> KeysToLog { get; } = new Dictionary<string, LoggProperty>()
         {
             {TagKeyEnum.ApplicationId,new LoggProperty(TagKeyEnum.ApplicationId,parseInt)},
             {TagKeyEnum.ClientId,new LoggProperty(TagKeyEnum.ClientId,parseInt)},
@@ -26,37 +25,53 @@ namespace Enferno.Public.Utils
             AddKeyToLog(key, parseString);
         }
 
-        public static void AddKeyToLog(string key,Func<string,object> func)
+        public static void AddKeyToLog(string key, Func<string, object> func)
         {
             if (!KeysToLog.ContainsKey(key))
             {
-                KeysToLog.Add(key,new LoggProperty(key, func));
+                KeysToLog.Add(key, new LoggProperty(key, func));
             }
         }
 
-        private static Func<string, object> parseString = value =>
+        private static Func<string, object> parseString
         {
-            if (int.TryParse(value, out int result))
-                return result;
-            return null;
-        };
+            get
+            {
+                return value =>
+                {
+                    if (int.TryParse(value, out int result))
+                        return result;
+                    return null;
+                };
+            }
+        }
 
-        private static Func<string, object> parseInt = value =>
+        private static Func<string, object> parseInt
         {
-            if (int.TryParse(value, out int result))
-                return result;
-            return null;
-        };
+            get
+            {
+                return value =>
+                {
+                    if (int.TryParse(value, out int result))
+                        return result;
+                    return null;
+                };
+            }
+        }
 
-        private static Func<string, object> parseGuid = value =>
+        private static Func<string, object> parseGuid
         {
-            if (Guid.TryParse(value, out Guid result))
-                return result;
-            return null;
-        };
+            get
+            {
+                return value =>
+                {
+                    if (Guid.TryParse(value, out Guid result))
+                        return result;
+                    return null;
+                };
+            }
+        }
     }
-
-   
 
     public class LoggProperty
     {
