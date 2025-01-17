@@ -2,7 +2,7 @@
 
 namespace Enferno.Public.Test
 {
-    public static class Extensions
+    public static class LogEntryExtensions
     {
         public static T GetProperty<T>(this LogEntry entry, string name)
         {

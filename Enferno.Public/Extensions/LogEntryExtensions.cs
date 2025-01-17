@@ -1,6 +1,5 @@
 ﻿using Enferno.Public.Utils;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
-using System;
 using System.Diagnostics;
 
 namespace Enferno.Public.Extensions
@@ -18,9 +17,9 @@ namespace Enferno.Public.Extensions
 
         internal static void AddActivityKeysToLog(this LogEntry logEntry)
         {
-            foreach (var key in TagKeyEnum.KeysToLog)
+            foreach (var key in LogTagUtils.KeysToLog)
             {
-                logEntry?.AddKeyIfMissing(key.Key, key.Value.GetValue(Activity.Current?.GetProperty(key.Key)));
+                logEntry?.AddKeyIfMissing(key.Key, key.Value(Activity.Current?.GetProperty(key.Key)));
             }
         }
 

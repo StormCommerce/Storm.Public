@@ -95,7 +95,7 @@ namespace Enferno.Public.Logging
         {
             if (ShouldBeLogged)
             {
-                entry.ExtendedProperties[TagKeyEnum.ClientId] = clientId;
+                entry.ExtendedProperties[TagNames.ClientId] = clientId;
             }
             return this;
         }
@@ -104,7 +104,7 @@ namespace Enferno.Public.Logging
         {
             if (ShouldBeLogged)
             {
-                entry.ExtendedProperties[TagKeyEnum.ApplicationId] = applicationId;
+                entry.ExtendedProperties[TagNames.ApplicationId] = applicationId;
             }
             return this;
         }

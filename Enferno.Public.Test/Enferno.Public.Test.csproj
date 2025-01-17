@@ -41,6 +41,12 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>enferno.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
@@ -61,7 +67,8 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Extensions.cs" />
+    <Compile Include="LogEntryExtensions.cs" />
+    <Compile Include="Extensions\ActivityExtensionsTests.cs" />
     <Compile Include="IoCTest.cs" />
     <Compile Include="LoggingTest.cs" />
     <Compile Include="StubTraceListener.cs" />
@@ -78,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="enferno.snk" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="AccessClient.Cache.xml">
@@ -101,6 +109,7 @@
       <Version>5.11.2</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
