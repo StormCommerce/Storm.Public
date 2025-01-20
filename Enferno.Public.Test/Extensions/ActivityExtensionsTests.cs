@@ -1,18 +1,13 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Diagnostics;
-using Enferno.Public.Extensions;
+﻿using Enferno.Public.Extensions;
 using Enferno.Public.Utils;
-using System;
-using System.Linq;
-using System.Reflection;
-using static System.Net.Mime.MediaTypeNames;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Diagnostics;
 
 namespace Enferno.Public.Test.Extensions
 {
     [TestClass]
     public class ActivityExtensionsTests
     {
-
         [TestMethod, TestCategory("UnitTest")]
         public void SetClientId_GivenInt_AssertBaggageContainsValue()
         {
@@ -25,7 +20,6 @@ namespace Enferno.Public.Test.Extensions
 
             // Assert
             Assert.AreEqual(testActivity.GetBaggageItem(TagNames.ClientId), clientId?.ToString());
-            
         }
 
         [TestMethod, TestCategory("UnitTest")]
@@ -54,7 +48,6 @@ namespace Enferno.Public.Test.Extensions
 
             // Assert
             Assert.AreEqual(testActivity.GetBaggageItem(TagNames.ApplicationId), applicationId?.ToString());
-
         }
 
         [TestMethod, TestCategory("UnitTest")]
@@ -63,10 +56,7 @@ namespace Enferno.Public.Test.Extensions
             // Arrange
             var testActivity = new Activity("Test");
             int? applicationId = 5;
-            var assemblyName = Assembly.GetExecutingAssembly().GetName();
-           string a = string.Format("{0}, PublicKey={1}",
-                assemblyName.Name,
-                string.Join("", assemblyName.GetPublicKey().Select(m => string.Format("{0:x2}", m))));
+
             // Act
             testActivity.SetApplicationId(applicationId);
 

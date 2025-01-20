@@ -1,10 +1,10 @@
-﻿using System;
-using System.Diagnostics;
-using System.Linq;
-using Enferno.Public.Extensions;
+﻿using Enferno.Public.Extensions;
 using Enferno.Public.Utils;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace Enferno.Public.Test.Extensions
 {
@@ -80,7 +80,7 @@ namespace Enferno.Public.Test.Extensions
             var activity = ActivitySource.StartActivity("test");
             var testGuid = Guid.NewGuid();
             var testInt = 123;
-            var testString= "abc";
+            var testString = "abc";
             activity.SetPropertyOnSpan(TagNames.JobKey, testGuid);
             activity.SetPropertyOnSpan(TagNames.ApplicationId, testInt);
             activity.SetPropertyOnSpan(TagNames.ClientId, testInt);
@@ -92,10 +92,10 @@ namespace Enferno.Public.Test.Extensions
             logEntry.AddActivityKeysToLog();
 
             // Assert
-            Assert.IsTrue(logEntry.ExtendedProperties.Any()); 
+            Assert.IsTrue(logEntry.ExtendedProperties.Any());
             Assert.AreEqual(logEntry.ExtendedProperties.Count, LogTagUtils.KeysToLog.Count);
 
-            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.JobKey],testGuid);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.JobKey], testGuid);
             Assert.AreEqual(logEntry.ExtendedProperties[TagNames.ApplicationId], testInt);
             Assert.AreEqual(logEntry.ExtendedProperties[TagNames.ClientId], testInt);
             Assert.AreEqual(logEntry.ExtendedProperties[TagNames.BasketId], testInt);

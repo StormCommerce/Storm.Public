@@ -26,7 +26,7 @@ namespace Enferno.Public.Test.Utils
             string key = "test";
 
             // Act
-            LogTagUtils.AddKeyToLog(key,(string a)=>a);
+            LogTagUtils.AddKeyToLog(key, (string a) => a);
 
             // Assert
             Assert.IsTrue(LogTagUtils.KeysToLog.ContainsKey(key));

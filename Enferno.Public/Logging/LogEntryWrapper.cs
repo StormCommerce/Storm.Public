@@ -1,11 +1,10 @@
-﻿using Microsoft.Practices.EnterpriseLibrary.Logging;
+﻿using Enferno.Public.Extensions;
+using Enferno.Public.Utils;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using Enferno.Public.Extensions;
-using Enferno.Public.Utils;
-using static Unity.Storage.RegistrationSet;
 
 namespace Enferno.Public.Logging
 {
@@ -268,7 +267,6 @@ namespace Enferno.Public.Logging
 
             entry.AddTraceIdAndSpanId();
             entry.AddActivityKeysToLog();
-         
 
             Log.Write(entry);
         }
