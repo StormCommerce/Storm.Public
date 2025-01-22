@@ -17,7 +17,7 @@ namespace Enferno.Public.Utils
             {TagNames.JobKey,_parseGuid},
         };
 
-        public static List<KeyValuePair<string, Func<string, object>>> KeysToLog => _keysToLog.ToList();
+        public static IList<KeyValuePair<string, Func<string, object>>> KeysToLog => _keysToLog.ToList();
 
 
         public static void AddKeyToLog(string key)

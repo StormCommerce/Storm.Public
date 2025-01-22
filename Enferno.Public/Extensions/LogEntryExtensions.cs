@@ -17,7 +17,7 @@ namespace Enferno.Public.Extensions
 
         internal static void AddActivityKeysToLog(this LogEntry logEntry)
         {
-            foreach (var key in LogTagUtils.GetKeysToLog)
+            foreach (var key in LogTagUtils.KeysToLog)
             {
                 logEntry?.AddKeyIfMissing(key.Key, key.Value(Activity.Current?.GetProperty(key.Key)));
             }

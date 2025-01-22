@@ -1,4 +1,5 @@
-﻿using Enferno.Public.Utils;
+﻿using System.Linq;
+using Enferno.Public.Utils;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Enferno.Public.Test.Utils
@@ -16,7 +17,7 @@ namespace Enferno.Public.Test.Utils
             LogTagUtils.AddKeyToLog(key);
 
             // Assert
-            Assert.IsTrue(LogTagUtils.KeysToLog.ContainsKey(key));
+            Assert.IsTrue(LogTagUtils.KeysToLog.Any(x=>x.Key==key));
         }
 
         [TestMethod, TestCategory("UnitTest")]
@@ -29,7 +30,7 @@ namespace Enferno.Public.Test.Utils
             LogTagUtils.AddKeyToLog(key, (string a) => a);
 
             // Assert
-            Assert.IsTrue(LogTagUtils.KeysToLog.ContainsKey(key));
+            Assert.IsTrue(LogTagUtils.KeysToLog.Any(x => x.Key == key));
         }
     }
 }

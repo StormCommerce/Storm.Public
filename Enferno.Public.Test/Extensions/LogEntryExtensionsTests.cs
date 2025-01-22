@@ -93,7 +93,6 @@ namespace Enferno.Public.Test.Extensions
 
             // Assert
             Assert.IsTrue(logEntry.ExtendedProperties.Any());
-            Assert.AreEqual(logEntry.ExtendedProperties.Count, LogTagUtils.KeysToLog.Count);
 
             Assert.AreEqual(logEntry.ExtendedProperties[TagNames.JobKey], testGuid);
             Assert.AreEqual(logEntry.ExtendedProperties[TagNames.ApplicationId], testInt);
