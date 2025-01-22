@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Enferno.Public.Utils
 {
     public class LogTagUtils
     {
-        internal static Dictionary<string, Func<string, object>> KeysToLog { get; } = new Dictionary<string, Func<string, object>>()
+        public static object lockObj = new object();
+        private static Dictionary<string, Func<string, object>> KeysToLog { get; } = new Dictionary<string, Func<string, object>>()
         {
             {TagNames.ApplicationId,_parseInt},
             {TagNames.ClientId,_parseInt},
@@ -14,6 +16,9 @@ namespace Enferno.Public.Utils
             {TagNames.JobId,_parseInt},
             {TagNames.JobKey,_parseGuid},
         };
+
+        public static List<KeyValuePair<string, Func<string, object>>> GetKeysToLog => KeysToLog.ToList();
+
 
         public static void AddKeyToLog(string key)
         {
@@ -24,7 +29,14 @@ namespace Enferno.Public.Utils
         {
             if (!KeysToLog.ContainsKey(key))
             {
-                KeysToLog.Add(key, func);
+                lock (lockObj)
+                {
+                    if (!KeysToLog.ContainsKey(key))
+                    {
+                        KeysToLog.Add(key, func);
+                    }
+                }
+                
             }
         }
 
