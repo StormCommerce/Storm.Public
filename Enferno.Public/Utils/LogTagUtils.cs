@@ -6,8 +6,8 @@ namespace Enferno.Public.Utils
 {
     public class LogTagUtils
     {
-        public static object lockObj = new object();
-        private static Dictionary<string, Func<string, object>> KeysToLog { get; } = new Dictionary<string, Func<string, object>>()
+        private static object lockObj = new object();
+        private static Dictionary<string, Func<string, object>> _keysToLog  = new Dictionary<string, Func<string, object>>()
         {
             {TagNames.ApplicationId,_parseInt},
             {TagNames.ClientId,_parseInt},
@@ -17,7 +17,7 @@ namespace Enferno.Public.Utils
             {TagNames.JobKey,_parseGuid},
         };
 
-        public static List<KeyValuePair<string, Func<string, object>>> GetKeysToLog => KeysToLog.ToList();
+        public static List<KeyValuePair<string, Func<string, object>>> KeysToLog => _keysToLog.ToList();
 
 
         public static void AddKeyToLog(string key)
@@ -27,13 +27,13 @@ namespace Enferno.Public.Utils
 
         public static void AddKeyToLog(string key, Func<string, object> func)
         {
-            if (!KeysToLog.ContainsKey(key))
+            if (!_keysToLog.ContainsKey(key))
             {
                 lock (lockObj)
                 {
-                    if (!KeysToLog.ContainsKey(key))
+                    if (!_keysToLog.ContainsKey(key))
                     {
-                        KeysToLog.Add(key, func);
+                        _keysToLog.Add(key, func);
                     }
                 }
                 
