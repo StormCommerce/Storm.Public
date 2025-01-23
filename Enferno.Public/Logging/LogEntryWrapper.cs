@@ -1,9 +1,10 @@
-﻿
+﻿using Enferno.Public.Extensions;
+using Enferno.Public.Utils;
+using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Enferno.Public.Logging
 {
@@ -51,15 +52,15 @@ namespace Enferno.Public.Logging
         private object[] messageArgs;
 
         /// <summary>
-        /// Resolved log message 
+        /// Resolved log message
         /// </summary>
         /// <remarks>For debugging purposes, set message with ChangeMessage()</remarks>
         private string FormattedMessage => message == null ? "" :
             (messageArgs != null && messageArgs.Length > 0) ? string.Format(message, messageArgs) :
             message;
 
-
         private readonly List<Exception> myExceptions = new List<Exception>();
+
         /// <summary>
         /// List of exceptions that will be added to log entry in the ErrorMessages output property (together with ErrorMessages)
         /// </summary>
@@ -70,6 +71,7 @@ namespace Enferno.Public.Logging
         }
 
         private readonly List<string> myErrorMessages = new List<string>();
+
         /// <summary>
         /// List of error messages that will be added to log entry in the ErrorMessages output property (together with Exceptions)
         /// </summary>
@@ -85,6 +87,24 @@ namespace Enferno.Public.Logging
         public LogEntryWrapper Title(string title)
         {
             entry.Title = title;
+            return this;
+        }
+
+        public LogEntryWrapper Client(int clientId)
+        {
+            if (ShouldBeLogged)
+            {
+                entry.ExtendedProperties[TagNames.ClientId] = clientId;
+            }
+            return this;
+        }
+
+        public LogEntryWrapper Application(int applicationId)
+        {
+            if (ShouldBeLogged)
+            {
+                entry.ExtendedProperties[TagNames.ApplicationId] = applicationId;
+            }
             return this;
         }
 
@@ -121,6 +141,7 @@ namespace Enferno.Public.Logging
             }
             return this;
         }
+
         public object Property(string key)
         {
             return entry.ExtendedProperties[key];
@@ -145,7 +166,6 @@ namespace Enferno.Public.Logging
 
         public void WriteError()
         {
-
             Write(TraceEventType.Error);
         }
 
@@ -167,7 +187,7 @@ namespace Enferno.Public.Logging
                 if (IsLogged(key)) return;
                 Write();
                 SetLogged(key);
-            }            
+            }
         }
 
         public void WriteInformation()
@@ -211,7 +231,7 @@ namespace Enferno.Public.Logging
         }
 
         /// <summary>
-        /// ShouldBeLogged checks if logging is enabled, if the categories are enabled for the current severity. 
+        /// ShouldBeLogged checks if logging is enabled, if the categories are enabled for the current severity.
         /// So the check if this instance should be logged severity and categories must be set.
         /// </summary>
         public bool ShouldBeLogged => Log.LoggingEnabled &&
@@ -245,6 +265,9 @@ namespace Enferno.Public.Logging
                 entry.AddErrorMessage(item);
             }
 
+            entry.AddTraceIdAndSpanId();
+            entry.AddActivityKeysToLog();
+
             Log.Write(entry);
         }
 
@@ -271,7 +294,7 @@ namespace Enferno.Public.Logging
         private static IEnumerable<string> GetCategoryList(CategoryFlags categories)
         {
             //loopa igenom värden på enum
-            return (from CategoryFlags categoryFlag in Enum.GetValues(typeof (CategoryFlags)) where categories.HasFlag(categoryFlag) select categoryFlag.ToString()).ToArray();
+            return (from CategoryFlags categoryFlag in Enum.GetValues(typeof(CategoryFlags)) where categories.HasFlag(categoryFlag) select categoryFlag.ToString()).ToArray();
         }
     }
 }
