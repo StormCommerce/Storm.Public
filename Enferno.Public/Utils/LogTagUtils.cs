@@ -19,6 +19,10 @@ namespace Enferno.Public.Utils
 
         public static IList<KeyValuePair<string, Func<string, object>>> KeysToLog => _keysToLog.ToList();
 
+        public static bool TryGetValue(string key,out Func<string, object> func)
+        {
+           return _keysToLog.TryGetValue(key,out func);
+        }
 
         public static void AddKeyToLog(string key)
         {
@@ -73,5 +77,7 @@ namespace Enferno.Public.Utils
                 };
             }
         }
+
+      
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Enferno.Public.Utils;
 using Microsoft.Practices.EnterpriseLibrary.Logging;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Enferno.Public.Extensions
 {
@@ -17,9 +18,13 @@ namespace Enferno.Public.Extensions
 
         internal static void AddActivityKeysToLog(this LogEntry logEntry)
         {
-            foreach (var key in LogTagUtils.KeysToLog)
+            if (!(Activity.Current?.Baggage?.Any() ?? false)) return;
+            foreach (var baggage in Activity.Current.Baggage)
             {
-                logEntry?.AddKeyIfMissing(key.Key, key.Value(Activity.Current?.GetProperty(key.Key)));
+                if (LogTagUtils.TryGetValue(baggage.Key, out var func))
+                {
+                    logEntry?.AddKeyIfMissing(TagNames.LogNameTransformer(baggage.Key), func(baggage.Value));
+                }
             }
         }
 
@@ -30,5 +35,7 @@ namespace Enferno.Public.Extensions
                 logEntry?.ExtendedProperties.Add(key, value);
             }
         }
+
+       
     }
 }

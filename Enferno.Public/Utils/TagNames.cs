@@ -9,5 +9,10 @@
         public const string OrderId = "norce.order.id";
         public const string JobId = "norce.job.id";
         public const string JobKey = "norce.job.key";
+
+        public static string LogNameTransformer(string key)
+        {
+            return key.Contains(".") ? key.Replace('.', '_') : key;
+        }
     }
 }
