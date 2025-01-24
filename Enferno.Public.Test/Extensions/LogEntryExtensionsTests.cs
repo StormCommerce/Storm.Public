@@ -94,12 +94,12 @@ namespace Enferno.Public.Test.Extensions
             // Assert
             Assert.IsTrue(logEntry.ExtendedProperties.Any());
 
-            Assert.AreEqual(logEntry.ExtendedProperties[Transform(TagNames.JobKey)], testGuid);
-            Assert.AreEqual(logEntry.ExtendedProperties[Transform(TagNames.ApplicationId)], testInt);
-            Assert.AreEqual(logEntry.ExtendedProperties[Transform(TagNames.ClientId)], testInt);
-            Assert.AreEqual(logEntry.ExtendedProperties[Transform(TagNames.BasketId)], testInt);
-            Assert.AreEqual(logEntry.ExtendedProperties[Transform(TagNames.OrderId)], testString);
-            Assert.AreEqual(logEntry.ExtendedProperties[Transform(TagNames.JobId)], testInt);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.LogNameTransformer(TagNames.JobKey)], testGuid);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.LogNameTransformer(TagNames.ApplicationId)], testInt);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.LogNameTransformer(TagNames.ClientId)], testInt);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.LogNameTransformer(TagNames.BasketId)], testInt);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.LogNameTransformer(TagNames.OrderId)], testString);
+            Assert.AreEqual(logEntry.ExtendedProperties[TagNames.LogNameTransformer(TagNames.JobId)], testInt);
         }
 
         [TestMethod, TestCategory("UnitTest")]
@@ -135,9 +135,6 @@ namespace Enferno.Public.Test.Extensions
             Assert.IsFalse(logEntry.ExtendedProperties.Any());
         }
 
-        private static string Transform(string key)
-        {
-            return key.Contains(".") ? key.Replace('.', '_') : key;
-        }
+     
     }
 }

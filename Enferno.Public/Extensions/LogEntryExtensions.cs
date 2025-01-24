@@ -23,7 +23,7 @@ namespace Enferno.Public.Extensions
             {
                 if (LogTagUtils.TryGetValue(baggage.Key, out var func))
                 {
-                    logEntry?.AddKeyIfMissing(Transform(baggage.Key), func(baggage.Value));
+                    logEntry?.AddKeyIfMissing(TagNames.LogNameTransformer(baggage.Key), func(baggage.Value));
                 }
             }
         }
@@ -36,9 +36,6 @@ namespace Enferno.Public.Extensions
             }
         }
 
-        private static string Transform(string key)
-        {
-            return key.Contains(".") ? key.Replace('.', '_') : key;
-        }
+       
     }
 }
